@@ -38,7 +38,6 @@ import TinyMCE from './tinymce';
 import { pickAriaProps } from './aria';
 import patterns from './patterns';
 import { withBlockEditContext } from '../block-edit/context';
-import { domToFormat, valueToString } from './format';
 import TokenUI from './tokens/ui';
 
 /**
@@ -58,6 +57,7 @@ const { Node, getSelection } = window;
 const TINYMCE_ZWSP = '\uFEFF';
 
 const { isEmpty } = richTextStructure;
+
 const richTextStructureSettings = {
 	removeNodeMatch: ( node ) => node.getAttribute( 'data-mce-bogus' ) === 'all',
 	unwrapNodeMatch: ( node ) => !! node.getAttribute( 'data-mce-bogus' ),
@@ -654,9 +654,9 @@ export class RichText extends Component {
 					afterFragment.appendChild( node );
 				} );
 
-				const { format, multiline } = this.props;
-				const before = domToFormat( beforeFragment, multiline, format );
-				const after = domToFormat( afterFragment, multiline, format );
+				const { multiline } = this.props;
+				const before = richTextStructure.create( beforeFragment, multiline, richTextStructureSettings );
+				const after = richTextStructure.create( afterFragment, multiline, richTextStructureSettings );
 
 				this.props.onSplit( before, after );
 			} else {
@@ -798,11 +798,6 @@ export class RichText extends Component {
 				selection: this.editor.hasFocus() ? selection : undefined,
 			}, this.editor.getBody(), multiline );
 		}
-
-		// When the block is unselected, remove placeholder links and hide the formatting toolbar.
-		if ( ! this.props.isSelected && prevProps.isSelected ) {
-			this.setState( { formats: {} } );
-		}
 	}
 
 	render() {
@@ -819,7 +814,6 @@ export class RichText extends Component {
 			keepPlaceholderOnFocus = false,
 			isSelected,
 			autocompleters,
-			format,
 		} = this.props;
 
 		const ariaProps = pickAriaProps( this.props );
@@ -877,7 +871,6 @@ export class RichText extends Component {
 								onSetup={ this.onSetup }
 								style={ style }
 								defaultValue={ value }
-								format={ format }
 								isPlaceholderVisible={ isPlaceholderVisible }
 								aria-label={ placeholder }
 								aria-autocomplete="list"
@@ -909,7 +902,6 @@ export class RichText extends Component {
 
 RichText.defaultProps = {
 	formattingControls: FORMATTING_CONTROLS.map( ( { format } ) => format ),
-	format: 'children',
 };
 
 const RichTextContainer = compose( [
@@ -957,39 +949,21 @@ const RichTextContainer = compose( [
 	withSafeTimeout,
 ] )( RichText );
 
-RichTextContainer.Content = ( { value, format = 'element', tagName: Tag, multiline, ...props } ) => {
-	let children;
-
-	if ( multiline ) {
-		children = (
-			<Fragment>
-				{ value.map( ( line, index ) =>
-					<RichTextContainer.Content
-						value={ line }
-						format={ format }
-						tagName={ multiline }
-						{ ...props }
-						key={ index }
-					/>
-				) }
-			</Fragment>
-		);
-	} else {
-		children = <RawHTML>{ valueToString( value, multiline, format ) }</RawHTML>;
-	}
+RichTextContainer.Content = ( { value, tagName: Tag, multiline, ...props } ) => {
+	const content = (
+		<RawHTML>
+			{ richTextStructure.toString( value, multiline ) }
+		</RawHTML>
+	);
 
 	if ( Tag ) {
-		return <Tag { ...props }>{ children }</Tag>;
+		return <Tag { ...props }>{ content }</Tag>;
 	}
 
-	return children;
+	return content;
 };
 
 RichTextContainer.isEmpty = isEmpty;
 RichTextContainer.concat = richTextStructure.concat;
-
-RichTextContainer.Content.defaultProps = {
-	format: 'children',
-};
 
 export default RichTextContainer;
