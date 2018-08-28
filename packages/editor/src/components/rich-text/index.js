@@ -23,9 +23,21 @@ import { createBlobURL } from '@wordpress/blob';
 import { BACKSPACE, DELETE, ENTER, LEFT, RIGHT, rawShortcut, isKeyboardEvent } from '@wordpress/keycodes';
 import { Slot } from '@wordpress/components';
 import { withDispatch, withSelect } from '@wordpress/data';
-import { rawHandler, richTextStructure } from '@wordpress/blocks';
+import { rawHandler } from '@wordpress/blocks';
 import { withInstanceId, withSafeTimeout, compose } from '@wordpress/compose';
 import { isURL } from '@wordpress/url';
+import {
+	isEmpty,
+	concat,
+	createWithSelection,
+	apply,
+	applyFormat,
+	removeFormat,
+	getActiveFormat,
+	split,
+	toString,
+	create,
+} from '@wordpress/rich-text-structure';
 
 /**
  * Internal dependencies
@@ -55,8 +67,6 @@ const { Node, getSelection } = window;
  * @type {string}
  */
 const TINYMCE_ZWSP = '\uFEFF';
-
-const { isEmpty } = richTextStructure;
 
 const richTextStructureSettings = {
 	removeNodeMatch: ( node ) => node.getAttribute( 'data-mce-bogus' ) === 'all',
@@ -213,7 +223,7 @@ export class RichText extends Component {
 	 * @param {Object} format The format to apply.
 	 */
 	applyFormat( format ) {
-		this.onChange( richTextStructure.applyFormat( this.getRecord(), format ) );
+		this.onChange( applyFormat( this.getRecord(), format ) );
 	}
 
 	/**
@@ -222,7 +232,7 @@ export class RichText extends Component {
 	 * @param {string} formatType The type of format to remove.
 	 */
 	removeFormat( formatType ) {
-		this.onChange( richTextStructure.removeFormat( this.getRecord(), formatType ) );
+		this.onChange( removeFormat( this.getRecord(), formatType ) );
 	}
 
 	/**
@@ -233,7 +243,7 @@ export class RichText extends Component {
 	 * @return {boolean} Wether the format is active or not.
 	 */
 	getActiveFormat( formatType ) {
-		return richTextStructure.getActiveFormat( this.getRecord(), formatType );
+		return getActiveFormat( this.getRecord(), formatType );
 	}
 
 	/**
@@ -396,11 +406,11 @@ export class RichText extends Component {
 		const { multiline } = this.props;
 		const rootNode = this.editor.getBody();
 		const range = this.editor.selection.getRng();
-		let record = richTextStructure.createWithSelection( rootNode, range, multiline, richTextStructureSettings );
+		let record = createWithSelection( rootNode, range, multiline, richTextStructureSettings );
 		const transformed = this.patterns.reduce( ( accu, transform ) => transform( accu ), record );
 
 		if ( record !== transformed ) {
-			richTextStructure.apply( transformed, this.editor.getBody(), multiline );
+			apply( transformed, this.editor.getBody(), multiline );
 			record = transformed;
 		}
 
@@ -421,7 +431,7 @@ export class RichText extends Component {
 
 		const range = this.editor.selection.getRng();
 		const { multiline } = this.props;
-		const { selection } = richTextStructure.createWithSelection( rootNode, range, multiline, richTextStructureSettings );
+		const { selection } = createWithSelection( rootNode, range, multiline, richTextStructureSettings );
 		const { start: nextStart, end: nextEnd } = selection;
 		const { start, end } = this.state.selection;
 
@@ -461,9 +471,9 @@ export class RichText extends Component {
 
 		if ( ! record ) {
 			const range = this.editor.selection.getRng();
-			record = richTextStructure.createWithSelection( rootNode, range, multiline, richTextStructureSettings );
+			record = createWithSelection( rootNode, range, multiline, richTextStructureSettings );
 		} else {
-			richTextStructure.apply( record, rootNode, multiline );
+			apply( record, rootNode, multiline );
 		}
 
 		this.savedContent = record.value;
@@ -655,8 +665,8 @@ export class RichText extends Component {
 				} );
 
 				const { multiline } = this.props;
-				const before = richTextStructure.create( beforeFragment, multiline, richTextStructureSettings );
-				const after = richTextStructure.create( afterFragment, multiline, richTextStructureSettings );
+				const before = create( beforeFragment, multiline, richTextStructureSettings );
+				const after = create( afterFragment, multiline, richTextStructureSettings );
 
 				this.props.onSplit( before, after );
 			} else {
@@ -737,7 +747,7 @@ export class RichText extends Component {
 			return;
 		}
 
-		let [ before, after ] = richTextStructure.split( value, selection.start, selection.end );
+		let [ before, after ] = split( value, selection.start, selection.end );
 
 		// In case split occurs at the trailing or leading edge of the field,
 		// assume that the before/after values respectively reflect the current
@@ -793,7 +803,7 @@ export class RichText extends Component {
 			value !== prevProps.value &&
 			value !== this.savedContent
 		) {
-			richTextStructure.apply( {
+			apply( {
 				value,
 				selection: this.editor.hasFocus() ? selection : undefined,
 			}, this.editor.getBody(), multiline );
@@ -953,7 +963,7 @@ const RichTextContainer = compose( [
 RichTextContainer.Content = ( { value, tagName: Tag, multiline, ...props } ) => {
 	const content = (
 		<RawHTML>
-			{ richTextStructure.toString( value, multiline ) }
+			{ toString( value, multiline ) }
 		</RawHTML>
 	);
 
@@ -965,6 +975,6 @@ RichTextContainer.Content = ( { value, tagName: Tag, multiline, ...props } ) => 
 };
 
 RichTextContainer.isEmpty = isEmpty;
-RichTextContainer.concat = richTextStructure.concat;
+RichTextContainer.concat = concat;
 
 export default RichTextContainer;

@@ -1,5 +1,3 @@
-import * as richTextStructure from './rich-text-structure';
-
 export {
 	createBlock,
 	cloneBlock,
@@ -53,4 +51,3 @@ export {
 	doBlocksMatchTemplate,
 	synchronizeBlocksWithTemplate,
 } from './templates';
-export { richTextStructure };
