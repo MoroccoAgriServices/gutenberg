@@ -35,7 +35,7 @@ import {
 	removeFormat,
 	getActiveFormat,
 	split,
-	toString,
+	toHTMLString,
 	createValue,
 	isSelectionEqual,
 	getTextContent,
@@ -896,7 +896,7 @@ export class RichText extends Component {
 								className={ className }
 								key={ key }
 								onPaste={ this.onPaste }
-								multiline={ MultilineTag }
+								multilineTag={ MultilineTag }
 							/>
 							{ isPlaceholderVisible &&
 								<Tagname
@@ -967,7 +967,7 @@ const RichTextContainer = compose( [
 RichTextContainer.Content = ( { value, tagName: Tag, multiline, ...props } ) => {
 	const content = (
 		<RawHTML>
-			{ toString( value, multiline ) }
+			{ toHTMLString( value, multiline ) }
 		</RawHTML>
 	);
 
