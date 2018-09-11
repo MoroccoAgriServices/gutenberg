@@ -1,3 +1,15 @@
+/**
+ * Splits a record into an array of records using a specified separator string
+ * or start and end indices to determine where to make each split. If indices
+ * are provided, the array will always consist of two records and the content in
+ * between will not be returned.
+ *
+ * @param {Object}        record  Record or record value to modify.
+ * @param {number|string} string  Start index, or string at which to split.
+ * @param {number}        end     End index.
+ *
+ * @return {Array} An array of new records.
+ */
 export function split( { selection, value }, string ) {
 	if ( typeof string !== 'string' ) {
 		if ( value === undefined ) {

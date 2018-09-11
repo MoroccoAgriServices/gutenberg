@@ -1,3 +1,14 @@
+/**
+ * Extracts a section of a record and returns it as a new record.
+ *
+ * Works like `String.prototype.slice()`.
+ *
+ * @param {Object} record Record or record value to modify.
+ * @param {number} start  Start index.
+ * @param {number} end    End index.
+ *
+ * @return {Object} A new extracted record.
+ */
 export function slice(
 	{ value, selection },
 	start = selection.start,

@@ -1,19 +1,23 @@
+/**
+ * Internal dependencies
+ */
+
 import { split } from './split';
 
 /**
  * Creates an HTML string from a rich text record.
  *
- * @param {Object} record    Rich text record.
- * @param {string} multiline Multiline tag.
+ * @param {Object} record       Rich text record.
+ * @param {string} multilineTag Multiline tag.
  *
  * @return {string} HTML string.
  */
-export function toHTMLString( { value }, multiline ) {
+export function toHTMLString( { value }, multilineTag ) {
 	if ( value === undefined ) {
 		return valueToString( ...arguments );
 	}
 
-	return valueToString( value, multiline );
+	return valueToString( value, multilineTag );
 }
 
 function getLastChild( { children } ) {

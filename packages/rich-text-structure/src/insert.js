@@ -1,3 +1,16 @@
+/**
+ * Inserts the second given record into the first.
+ * The value in between the start and end indices will be removed.
+ * If no start index or end index is provided, the record's selection will be
+ * used.
+ *
+ * @param {Object} record         Record or record value to modify.
+ * @param {string} recordToInsert Record or record value to insert.
+ * @param {number} start          Start index.
+ * @param {number} end            End index.
+ *
+ * @return {Object} A new record with the record inserted.
+ */
 export function insert(
 	{ value, selection = {} },
 	recordToInsert,

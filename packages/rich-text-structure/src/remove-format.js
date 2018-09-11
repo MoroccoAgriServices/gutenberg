@@ -4,6 +4,19 @@
 
 import { find } from 'lodash';
 
+/**
+ * Removes a given format from a record from the given start to the given end.
+ * If either start or end are omitted, the record's selection will be used.
+ * If the selection is collapsed, the start and end will be expanded to the
+ * boundaries of the format.
+ *
+ * @param {Object} record     Record or record value to modify.
+ * @param {string} formatType Format type to remove.
+ * @param {number} start      Start index.
+ * @param {number} end        End index.
+ *
+ * @return {Object} A new record with the format applied.
+ */
 export function removeFormat(
 	{ value, selection = {} },
 	formatType,
