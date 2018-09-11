@@ -78,7 +78,7 @@ export const settings = {
 		return (
 			<figure>
 				<blockquote>
-					<RichText.Content value={ value } />
+					<RichText.Content value={ value } multiline="p" />
 					{ ! RichText.isEmpty( citation ) && <RichText.Content tagName="cite" value={ citation } /> }
 				</blockquote>
 			</figure>
@@ -93,7 +93,7 @@ export const settings = {
 			const { value, citation } = attributes;
 			return (
 				<blockquote>
-					<RichText.Content value={ value } />
+					<RichText.Content value={ value } multiline="p" />
 					{ ! RichText.isEmpty( citation ) && <RichText.Content tagName="cite" value={ citation } /> }
 				</blockquote>
 			);
