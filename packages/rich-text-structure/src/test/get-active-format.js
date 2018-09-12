@@ -9,10 +9,8 @@ describe( 'getActiveFormat', () => {
 
 	it( 'should get format by selection', () => {
 		const record = {
-			value: {
-				formats: [ [ em ], , , ],
-				text: 'one',
-			},
+			formats: [ [ em ], , , ],
+			text: 'one',
 			selection: {
 				start: 0,
 				end: 0,
@@ -24,10 +22,8 @@ describe( 'getActiveFormat', () => {
 
 	it( 'should get format by selection using the start', () => {
 		const record = {
-			value: {
-				formats: [ [ em ], , [ em ] ],
-				text: 'one',
-			},
+			formats: [ [ em ], , [ em ] ],
+			text: 'one',
 			selection: {
 				start: 1,
 				end: 1,

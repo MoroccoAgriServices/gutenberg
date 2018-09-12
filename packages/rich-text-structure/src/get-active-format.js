@@ -4,12 +4,10 @@
 
 import { find } from 'lodash';
 
-export function getActiveFormat( { value, selection }, formatType ) {
+export function getActiveFormat( { formats, selection }, formatType ) {
 	if ( ! selection || selection.start === undefined ) {
 		return;
 	}
 
-	const formats = value.formats[ selection.start ];
-
-	return find( formats, { type: formatType } );
+	return find( formats[ selection.start ], { type: formatType } );
 }

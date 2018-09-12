@@ -23,10 +23,8 @@ describe( 'slice', () => {
 
 	it( 'should slice record', () => {
 		const record = {
-			value: {
-				formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
-				text: 'one two three',
-			},
+			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
+			text: 'one two three',
 			selection: {
 				start: 3,
 				end: 6,
@@ -34,11 +32,8 @@ describe( 'slice', () => {
 		};
 
 		const expected = {
-			value: {
-				formats: [ , [ em ], [ em ] ],
-				text: ' tw',
-			},
-			selection: {},
+			formats: [ , [ em ], [ em ] ],
+			text: ' tw',
 		};
 
 		expect( slice( record ) ).toEqual( expected );

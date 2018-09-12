@@ -12,11 +12,13 @@ describe( 'applyFormat', () => {
 		const record = {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
+			selection: {},
 		};
 
 		const expected = {
 			formats: [ , , , [ strong ], [ em, strong ], [ em, strong ], [ em ], , , , , , , ],
 			text: 'one two three',
+			selection: {},
 		};
 
 		expect( applyFormat( record, strong, 3, 6 ) ).toEqual( expected );
@@ -24,10 +26,8 @@ describe( 'applyFormat', () => {
 
 	it( 'should apply format by selection', () => {
 		const record = {
-			value: {
-				formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
-				text: 'one two three',
-			},
+			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
+			text: 'one two three',
 			selection: {
 				start: 3,
 				end: 6,
@@ -35,10 +35,8 @@ describe( 'applyFormat', () => {
 		};
 
 		const expected = {
-			value: {
-				formats: [ , , , [ strong ], [ em, strong ], [ em, strong ], [ em ], , , , , , , ],
-				text: 'one two three',
-			},
+			formats: [ , , , [ strong ], [ em, strong ], [ em, strong ], [ em ], , , , , , , ],
+			text: 'one two three',
 			selection: {
 				start: 3,
 				end: 6,

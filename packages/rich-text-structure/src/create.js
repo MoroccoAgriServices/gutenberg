@@ -45,10 +45,8 @@ export function create( element, range, multilineTag, settings ) {
 	}
 
 	const emptyRecord = {
-		value: {
-			formats: [],
-			text: '',
-		},
+		formats: [],
+		text: '',
 		selection: {},
 	};
 
@@ -65,8 +63,8 @@ export function create( element, range, multilineTag, settings ) {
 	}
 
 	return children.reduce( ( accumulator, node, index ) => {
-		const { selection, value } = createRecord( node, range, settings );
-		const length = accumulator.value.text.length;
+		const { selection, text, formats } = createRecord( node, range, settings );
+		const length = accumulator.text.length;
 
 		if ( range ) {
 			if ( selection.start !== undefined ) {
@@ -84,16 +82,16 @@ export function create( element, range, multilineTag, settings ) {
 				node.parentNode === range.endContainer &&
 				node === range.endContainer.childNodes[ range.endOffset - 1 ]
 			) {
-				accumulator.selection.end = length + value.text.length;
+				accumulator.selection.end = length + text.length;
 			}
 		}
 
-		accumulator.value.formats = accumulator.value.formats.concat( value.formats );
-		accumulator.value.text += value.text;
+		accumulator.formats = accumulator.formats.concat( formats );
+		accumulator.text += text;
 
 		if ( index !== maxIndex ) {
-			accumulator.value.formats = accumulator.value.formats.concat( [ , , ] );
-			accumulator.value.text += '\n\n';
+			accumulator.formats = accumulator.formats.concat( [ , , ] );
+			accumulator.text += '\n\n';
 		}
 
 		return accumulator;
@@ -110,7 +108,9 @@ export function create( element, range, multilineTag, settings ) {
  * @return {Object} A rich text value object.
  */
 export function createValue( element, multilineTag, settings ) {
-	return create( element, null, multilineTag, settings ).value;
+	const record = create( element, null, multilineTag, settings );
+	delete record.selection;
+	return record;
 }
 
 /**
@@ -134,10 +134,8 @@ export function createValue( element, multilineTag, settings ) {
  */
 function createRecord( element, range, settings = {} ) {
 	const emptyRecord = {
-		value: {
-			formats: [],
-			text: '',
-		},
+		formats: [],
+		text: '',
 		selection: {},
 	};
 
@@ -162,7 +160,7 @@ function createRecord( element, range, settings = {} ) {
 			const text = filterStringComplete( nodeValue );
 
 			if ( range ) {
-				const textLength = accumulator.value.text.length;
+				const textLength = accumulator.text.length;
 
 				if ( node === range.startContainer ) {
 					const charactersBefore = nodeValue.slice( 0, range.startOffset );
@@ -191,10 +189,10 @@ function createRecord( element, range, settings = {} ) {
 				}
 			}
 
-			accumulator.value.text += text;
+			accumulator.text += text;
 			// Create a sparse array of the same length as `text`, in which
 			// formats can be added.
-			accumulator.value.formats.length += text.length;
+			accumulator.formats.length += text.length;
 			return accumulator;
 		}
 
@@ -207,14 +205,14 @@ function createRecord( element, range, settings = {} ) {
 				node.parentNode === range.startContainer &&
 				node === range.startContainer.childNodes[ range.startOffset ]
 			) {
-				accumulator.selection.start = accumulator.value.text.length;
+				accumulator.selection.start = accumulator.text.length;
 			}
 
 			if (
 				node.parentNode === range.endContainer &&
 				node === range.endContainer.childNodes[ range.endOffset - 1 ]
 			) {
-				accumulator.selection.end = accumulator.value.text.length;
+				accumulator.selection.end = accumulator.text.length;
 			}
 		}
 
@@ -223,8 +221,8 @@ function createRecord( element, range, settings = {} ) {
 				return accumulator;
 			}
 
-			accumulator.value.text += '\n';
-			accumulator.value.formats.length += 1;
+			accumulator.text += '\n';
+			accumulator.formats.length += 1;
 			return accumulator;
 		}
 
@@ -236,9 +234,9 @@ function createRecord( element, range, settings = {} ) {
 			format = attributes ? { type, attributes } : { type };
 		}
 
-		const { value, selection } = createRecord( node, range, settings );
-		const text = value.text;
-		const start = accumulator.value.text.length;
+		const record = createRecord( node, range, settings );
+		const text = record.text;
+		const start = accumulator.text.length;
 
 		// Expand range if it ends in this node.
 		if ( range ) {
@@ -251,11 +249,11 @@ function createRecord( element, range, settings = {} ) {
 		}
 
 		// Don't apply the element as formatting if it has no content.
-		if ( isEmpty( value ) && format && ! format.attributes ) {
+		if ( isEmpty( record ) && format && ! format.attributes ) {
 			return accumulator;
 		}
 
-		const { formats } = accumulator.value;
+		const { formats } = accumulator;
 
 		if ( format && format.attributes && text.length === 0 ) {
 			format.object = true;
@@ -266,9 +264,9 @@ function createRecord( element, range, settings = {} ) {
 				formats[ start ] = [ format ];
 			}
 		} else {
-			accumulator.value.text += text;
+			accumulator.text += text;
 
-			let i = value.formats.length;
+			let i = record.formats.length;
 
 			while ( i-- ) {
 				const index = start + i;
@@ -281,22 +279,22 @@ function createRecord( element, range, settings = {} ) {
 					}
 				}
 
-				if ( value.formats[ i ] ) {
+				if ( record.formats[ i ] ) {
 					if ( formats[ index ] ) {
-						formats[ index ].push( ...value.formats[ i ] );
+						formats[ index ].push( ...record.formats[ i ] );
 					} else {
-						formats[ index ] = value.formats[ i ];
+						formats[ index ] = record.formats[ i ];
 					}
 				}
 			}
 		}
 
-		if ( selection.start !== undefined ) {
-			accumulator.selection.start = start + selection.start;
+		if ( record.selection.start !== undefined ) {
+			accumulator.selection.start = start + record.selection.start;
 		}
 
-		if ( selection.end !== undefined ) {
-			accumulator.selection.end = start + selection.end;
+		if ( record.selection.end !== undefined ) {
+			accumulator.selection.end = start + record.selection.end;
 		}
 
 		return accumulator;

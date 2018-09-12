@@ -10,7 +10,7 @@ import { find } from 'lodash';
  * If the selection is collapsed, the start and end will be expanded to the
  * boundaries of the format.
  *
- * @param {Object} record     Record or record value to modify.
+ * @param {Object} record     Record to modify.
  * @param {string} formatType Format type to remove.
  * @param {number} start      Start index.
  * @param {number} end        End index.
@@ -18,36 +18,10 @@ import { find } from 'lodash';
  * @return {Object} A new record with the format applied.
  */
 export function removeFormat(
-	{ value, selection = {} },
+	{ formats, text, selection = {} },
 	formatType,
 	start = selection.start,
 	end = selection.end
-) {
-	if ( value === undefined ) {
-		return removeFormatFromValue( ...arguments );
-	}
-
-	return {
-		selection,
-		value: removeFormatFromValue( value, formatType, start, end ),
-	};
-}
-
-function filterFormats( formats, index, formatType ) {
-	const newFormats = formats[ index ].filter( ( { type } ) => type !== formatType );
-
-	if ( newFormats.length ) {
-		formats[ index ] = newFormats;
-	} else {
-		delete formats[ index ];
-	}
-}
-
-export function removeFormatFromValue(
-	{ formats, text },
-	formatType,
-	start,
-	end
 ) {
 	// If the selection is collapsed, expand start and end to the edges of the
 	// format.
@@ -73,5 +47,15 @@ export function removeFormatFromValue(
 		}
 	}
 
-	return { formats, text };
+	return { formats, text, selection };
+}
+
+function filterFormats( formats, index, formatType ) {
+	const newFormats = formats[ index ].filter( ( { type } ) => type !== formatType );
+
+	if ( newFormats.length ) {
+		formats[ index ] = newFormats;
+	} else {
+		delete formats[ index ];
+	}
 }

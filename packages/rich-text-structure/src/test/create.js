@@ -41,10 +41,8 @@ describe( 'create', () => {
 			} ),
 			record: {
 				selection: {},
-				value: {
-					formats: [],
-					text: '',
-				},
+				formats: [],
+				text: '',
 			},
 		},
 		{
@@ -61,10 +59,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 0,
 				},
-				value: {
-					formats: [],
-					text: '',
-				},
+				formats: [],
+				text: '',
 			},
 		},
 		{
@@ -81,10 +77,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ , , , , ],
-					text: 'test',
-				},
+				formats: [ , , , , ],
+				text: 'test',
 			},
 		},
 		{
@@ -101,10 +95,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 2,
 				},
-				value: {
-					formats: [ , , ],
-					text: '🍒',
-				},
+				formats: [ , , ],
+				text: '🍒',
 			},
 		},
 		{
@@ -121,10 +113,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 2,
 				},
-				value: {
-					formats: [ [ em ], [ em ] ],
-					text: '🍒',
-				},
+				formats: [ [ em ], [ em ] ],
+				text: '🍒',
 			},
 		},
 		{
@@ -141,10 +131,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ [ em ], [ em ], [ em ], [ em ] ],
-					text: 'test',
-				},
+				formats: [ [ em ], [ em ], [ em ], [ em ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -161,10 +149,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ [ em, strong ], [ em, strong ], [ em, strong ], [ em, strong ] ],
-					text: 'test',
-				},
+				formats: [ [ em, strong ], [ em, strong ], [ em, strong ], [ em, strong ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -181,10 +167,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 2,
 				},
-				value: {
-					formats: [ [ em ], [ em ], [ em ], [ em ] ],
-					text: 'test',
-				},
+				formats: [ [ em ], [ em ], [ em ], [ em ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -201,10 +185,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ [ a ], [ a ], [ a ], [ a ] ],
-					text: 'test',
-				},
+				formats: [ [ a ], [ a ], [ a ], [ a ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -221,10 +203,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 0,
 				},
-				value: {
-					formats: [ [ img ] ],
-					text: '',
-				},
+				formats: [ [ img ] ],
+				text: '',
 			},
 		},
 		{
@@ -238,10 +218,8 @@ describe( 'create', () => {
 			} ),
 			record: {
 				selection: {},
-				value: {
-					formats: [ [ em, img ] ],
-					text: '',
-				},
+				formats: [ [ em, img ] ],
+				text: '',
 			},
 		},
 		{
@@ -258,10 +236,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ , , [ em ], [ em ], [ em, img ] ],
-					text: 'test',
-				},
+				formats: [ , , [ em ], [ em ], [ em, img ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -278,10 +254,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ [ em, img ], [ em ], [ em ], , , ],
-					text: 'test',
-				},
+				formats: [ [ em, img ], [ em ], [ em ], , , ],
+				text: 'test',
 			},
 		},
 		{
@@ -298,10 +272,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 0,
 				},
-				value: {
-					formats: [ , ],
-					text: '\n',
-				},
+				formats: [ , ],
+				text: '\n',
 			},
 		},
 		{
@@ -318,10 +290,8 @@ describe( 'create', () => {
 					start: 2,
 					end: 2,
 				},
-				value: {
-					formats: [ , , , , , ],
-					text: 'te\nst',
-				},
+				formats: [ , , , , , ],
+				text: 'te\nst',
 			},
 		},
 		{
@@ -338,10 +308,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 1,
 				},
-				value: {
-					formats: [ [ em ] ],
-					text: '\n',
-				},
+				formats: [ [ em ] ],
+				text: '\n',
 			},
 		},
 		{
@@ -358,10 +326,8 @@ describe( 'create', () => {
 				selection: {
 					start: 1,
 				},
-				value: {
-					formats: [ , , , , , , , , ],
-					text: 'one\n\ntwo',
-				},
+				formats: [ , , , , , , , , ],
+				text: 'one\n\ntwo',
 			},
 		},
 		{
@@ -379,10 +345,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 6,
 				},
-				value: {
-					formats: [ , , , list, list, list, , , , , , , , ],
-					text: 'onetwo\n\nthree',
-				},
+				formats: [ , , , list, list, list, , , , , , , , ],
+				text: 'onetwo\n\nthree',
 			},
 		},
 		{
@@ -402,10 +366,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 0,
 				},
-				value: {
-					formats: [],
-					text: '',
-				},
+				formats: [],
+				text: '',
 			},
 		},
 		{
@@ -425,10 +387,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 0,
 				},
-				value: {
-					formats: [],
-					text: '',
-				},
+				formats: [],
+				text: '',
 			},
 		},
 		{
@@ -448,10 +408,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ , , [ em ], [ em ] ],
-					text: 'test',
-				},
+				formats: [ , , [ em ], [ em ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -471,10 +429,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 1,
 				},
-				value: {
-					formats: [ , , , ],
-					text: 'two',
-				},
+				formats: [ , , , ],
+				text: 'two',
 			},
 		},
 		{
@@ -494,10 +450,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 4,
 				},
-				value: {
-					formats: [ [ strong ], [ strong ], [ strong ], [ strong ] ],
-					text: 'test',
-				},
+				formats: [ [ strong ], [ strong ], [ strong ], [ strong ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -517,10 +471,8 @@ describe( 'create', () => {
 					start: 0,
 					end: 0,
 				},
-				value: {
-					formats: [],
-					text: '',
-				},
+				formats: [],
+				text: '',
 			},
 		},
 		{
@@ -540,10 +492,8 @@ describe( 'create', () => {
 					start: 4,
 					end: 4,
 				},
-				value: {
-					formats: [ , , , , ],
-					text: 'test',
-				},
+				formats: [ , , , , ],
+				text: 'test',
 			},
 		},
 		{
@@ -563,10 +513,8 @@ describe( 'create', () => {
 					start: 4,
 					end: 4,
 				},
-				value: {
-					formats: [ [ em ], [ em ], [ em ], [ em ] ],
-					text: 'test',
-				},
+				formats: [ [ em ], [ em ], [ em ], [ em ] ],
+				text: 'test',
 			},
 		},
 		{
@@ -586,10 +534,8 @@ describe( 'create', () => {
 					start: 4,
 					end: 4,
 				},
-				value: {
-					formats: [ [ em ], [ em ], [ em ], [ em ] ],
-					text: 'test',
-				},
+				formats: [ [ em ], [ em ], [ em ], [ em ] ],
+				text: 'test',
 			},
 		},
 	];
@@ -602,8 +548,8 @@ describe( 'create', () => {
 			expect( createdRecord ).toEqual( record );
 
 			if ( ! multiline ) {
-				const formatsLength = getSparseArrayLength( record.value.formats );
-				const createdFormatsLength = getSparseArrayLength( createdRecord.value.formats );
+				const formatsLength = getSparseArrayLength( record.formats );
+				const createdFormatsLength = getSparseArrayLength( createdRecord.formats );
 				expect( createdFormatsLength ).toEqual( formatsLength );
 			}
 		} );

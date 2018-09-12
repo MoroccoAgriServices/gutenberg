@@ -4,44 +4,29 @@
  * If no start index or end index is provided, the record's selection will be
  * used.
  *
- * @param {Object} record         Record or record value to modify.
- * @param {string} recordToInsert Record or record value to insert.
+ * @param {Object} record         Record to modify.
+ * @param {string} recordToInsert Record to insert.
  * @param {number} start          Start index.
  * @param {number} end            End index.
  *
  * @return {Object} A new record with the record inserted.
  */
 export function insert(
-	{ value, selection = {} },
+	{ formats, text, selection = {} },
 	recordToInsert,
 	start = selection.start,
 	end = selection.end
 ) {
-	if ( value === undefined ) {
-		return insertValue( ...arguments );
-	}
+	const index = start + recordToInsert.text.length;
 
-	const index = start + recordToInsert.value.text.length;
+	formats.splice( start, end - start, ...recordToInsert.formats );
 
 	return {
+		formats,
+		text: text.slice( 0, start ) + recordToInsert.text + text.slice( end ),
 		selection: {
 			start: index,
 			end: index,
 		},
-		value: insertValue( value, recordToInsert.value, start, end ),
-	};
-}
-
-function insertValue(
-	{ formats, text },
-	valueToInsert,
-	start,
-	end
-) {
-	formats.splice( start, end - start, ...valueToInsert.formats );
-
-	return {
-		formats,
-		text: text.slice( 0, start ) + valueToInsert.text + text.slice( end ),
 	};
 }

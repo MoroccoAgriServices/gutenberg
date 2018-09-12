@@ -3,7 +3,7 @@
  *
  * Works like `String.prototype.replace()`.
  *
- * @param {Object}         record       The record or record value te modify.
+ * @param {Object}         record       The record to modify.
  * @param {RegExp|string}  pattern      A RegExp object or literal. Can also be
  *                                      a string. It is treated as a verbatim
  *                                      string and is not interpreted as a
@@ -16,21 +16,6 @@
  * @return {Object} A new record with replacements applied.
  */
 export function replace(
-	{ value },
-	pattern,
-	replacement
-) {
-	if ( value === undefined ) {
-		return replaceValue( ...arguments );
-	}
-
-	return {
-		selection: {},
-		value: replaceValue( value, pattern, replacement ),
-	};
-}
-
-function replaceValue(
 	{ formats, text },
 	pattern,
 	replacement
@@ -56,8 +41,5 @@ function replaceValue(
 		return newText;
 	} );
 
-	return {
-		formats,
-		text,
-	};
+	return { formats, text, selection: {} };
 }

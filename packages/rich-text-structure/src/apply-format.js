@@ -4,7 +4,7 @@
  * If at any index there is already a format of the same type present, it will
  * be removed.
  *
- * @param {Object} record Record or record value to modify.
+ * @param {Object} record Record to modify.
  * @param {Object} format Format to apply.
  * @param {number} start  Start index.
  * @param {number} end    End index.
@@ -12,26 +12,10 @@
  * @return {Object} A new record with the format applied.
  */
 export function applyFormat(
-	{ value, selection = {} },
+	{ formats, text, selection = {} },
 	format,
 	start = selection.start,
 	end = selection.end
-) {
-	if ( value === undefined ) {
-		return applyFormatToValue( ...arguments );
-	}
-
-	return {
-		selection,
-		value: applyFormatToValue( value, format, start, end ),
-	};
-}
-
-function applyFormatToValue(
-	{ formats, text },
-	format,
-	start,
-	end
 ) {
 	for ( let i = start; i < end; i++ ) {
 		if ( formats[ i ] ) {
@@ -43,5 +27,5 @@ function applyFormatToValue(
 		}
 	}
 
-	return { formats, text };
+	return { formats, text, selection };
 }

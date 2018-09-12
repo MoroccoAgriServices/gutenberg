@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 
 import { split } from './split';
 
@@ -55,13 +58,12 @@ function getNodeByPath( node, path ) {
 	};
 }
 
-export function recordToDom( { value, selection = {} }, tag ) {
+export function recordToDom( { formats, text, selection = {} }, tag ) {
 	const htmlDocument = document.implementation.createHTMLDocument( '' );
 	let { body } = htmlDocument;
 	let startPath = [];
 	let endPath = [];
 
-	const { formats, text } = value;
 	const { start, end } = selection;
 	const formatsLength = formats.length + 1;
 

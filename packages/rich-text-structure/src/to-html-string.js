@@ -12,12 +12,50 @@ import { split } from './split';
  *
  * @return {string} HTML string.
  */
-export function toHTMLString( { value }, multilineTag ) {
-	if ( value === undefined ) {
-		return valueToString( ...arguments );
+export function toHTMLString( record, multilineTag ) {
+	if ( multilineTag ) {
+		return split( record, '\n\n' ).map( ( line ) =>
+			`<${ multilineTag }>${ toHTMLString( line ) }</${ multilineTag }>`
+		).join( '' );
 	}
 
-	return valueToString( value, multilineTag );
+	const { formats, text } = record;
+	const formatsLength = formats.length + 1;
+	const tree = {};
+
+	append( tree, { text: '' } );
+
+	for ( let i = 0; i < formatsLength; i++ ) {
+		const character = text.charAt( i );
+		const characterFormats = formats[ i ];
+
+		let pointer = getLastChild( tree );
+
+		if ( characterFormats ) {
+			characterFormats.forEach( ( { type, attributes, object } ) => {
+				if ( pointer && type === pointer.type ) {
+					pointer = getLastChild( pointer );
+					return;
+				}
+
+				const newNode = { type, attributes, object };
+				append( pointer.parent, newNode );
+				pointer = append( object ? pointer.parent : newNode, { text: '' } );
+			} );
+		}
+
+		if ( character ) {
+			if ( character === '\n' ) {
+				pointer = append( pointer.parent, { type: 'br', object: true } );
+			} else if ( pointer.text === undefined ) {
+				pointer = append( pointer.parent, { text: character } );
+			} else {
+				pointer.text += character;
+			}
+		}
+	}
+
+	return createChildrenHTML( tree.children );
 }
 
 function getLastChild( { children } ) {
@@ -61,50 +99,4 @@ function createChildrenHTML( children = [] ) {
 	return children.map( ( child ) => {
 		return child.text === undefined ? createElementHTML( child ) : escapeHtml( child.text );
 	} ).join( '' );
-}
-
-export function valueToString( value, multilineTag ) {
-	if ( multilineTag ) {
-		return split( value, '\n\n' ).map( ( line ) =>
-			`<${ multilineTag }>${ valueToString( line ) }</${ multilineTag }>`
-		).join( '' );
-	}
-
-	const { formats, text } = value;
-	const formatsLength = formats.length + 1;
-	const tree = {};
-
-	append( tree, { text: '' } );
-
-	for ( let i = 0; i < formatsLength; i++ ) {
-		const character = text.charAt( i );
-		const characterFormats = formats[ i ];
-
-		let pointer = getLastChild( tree );
-
-		if ( characterFormats ) {
-			characterFormats.forEach( ( { type, attributes, object } ) => {
-				if ( pointer && type === pointer.type ) {
-					pointer = getLastChild( pointer );
-					return;
-				}
-
-				const newNode = { type, attributes, object };
-				append( pointer.parent, newNode );
-				pointer = append( object ? pointer.parent : newNode, { text: '' } );
-			} );
-		}
-
-		if ( character ) {
-			if ( character === '\n' ) {
-				pointer = append( pointer.parent, { type: 'br', object: true } );
-			} else if ( pointer.text === undefined ) {
-				pointer = append( pointer.parent, { text: character } );
-			} else {
-				pointer.text += character;
-			}
-		}
-	}
-
-	return createChildrenHTML( tree.children );
 }

@@ -2,8 +2,6 @@
 
 This module contains helper functions to convert HTML or a DOM tree into a rich text structure and back, and to modify the structure with functions that are similar to `String` methods, and some additional ones for formatting.
 
-A single record contains the selection, plain text, and formats.
-
 ## `create( element, range, multilineTag, settings )`
 
 ## `toHTMLString( record, multilineTag )`

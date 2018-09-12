@@ -9,10 +9,8 @@ describe( 'replace', () => {
 
 	it( 'should replace string to string', () => {
 		const record = {
-			value: {
-				formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
-				text: 'one two three',
-			},
+			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
+			text: 'one two three',
 			selection: {
 				start: 6,
 				end: 6,
@@ -20,10 +18,8 @@ describe( 'replace', () => {
 		};
 
 		const expected = {
-			value: {
-				formats: [ , , , , [ em ], , , , , , , ],
-				text: 'one 2 three',
-			},
+			formats: [ , , , , [ em ], , , , , , , ],
+			text: 'one 2 three',
 			selection: {},
 		};
 
@@ -32,10 +28,8 @@ describe( 'replace', () => {
 
 	it( 'should replace string to record', () => {
 		const record = {
-			value: {
-				formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
-				text: 'one two three',
-			},
+			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
+			text: 'one two three',
 			selection: {
 				start: 6,
 				end: 6,
@@ -48,10 +42,8 @@ describe( 'replace', () => {
 		};
 
 		const expected = {
-			value: {
-				formats: [ , , , , , , , , , , , ],
-				text: 'one 2 three',
-			},
+			formats: [ , , , , , , , , , , , ],
+			text: 'one 2 three',
 			selection: {},
 		};
 
@@ -60,10 +52,8 @@ describe( 'replace', () => {
 
 	it( 'should replace string to function', () => {
 		const record = {
-			value: {
-				formats: [ , , , , , , , , , , , , ],
-				text: 'abc12345#$*%',
-			},
+			formats: [ , , , , , , , , , , , , ],
+			text: 'abc12345#$*%',
 			selection: {
 				start: 6,
 				end: 6,
@@ -71,10 +61,8 @@ describe( 'replace', () => {
 		};
 
 		const expected = {
-			value: {
-				formats: [ , , , , , , , , , , , , , , , , , , ],
-				text: 'abc - 12345 - #$*%',
-			},
+			formats: [ , , , , , , , , , , , , , , , , , , ],
+			text: 'abc - 12345 - #$*%',
 			selection: {},
 		};
 
