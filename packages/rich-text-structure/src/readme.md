@@ -12,23 +12,23 @@ This module contains helper functions to convert HTML or a DOM tree into a rich 
 
 ## `isEmpty( record )`
 
-## `applyFormat( record, format, start, end )`
+## `applyFormat( record, format, startIndex, endIndex )`
 
-## `removeFormat( record, formatType, start, end )`
+## `removeFormat( record, formatType, startIndex, endIndex )`
 
 ## `getActiveFormat( record, formatType )`
 
 ## `getTextContent( record )`
 
-## `slice( record, start, end )`
+## `slice( record, startIndex, endIndex )`
 
 ## `replace( record, pattern, replacement )`
 
-## `insert( record, recordToInsert, start, end )`
+## `insert( record, recordToInsert, startIndex, endIndex )`
 
-## `remove( record, start, end )`
+## `remove( record, startIndex, endIndex )`
 
-## `split( record, start, end )`
+## `split( record, startIndex, endIndex )`
 
 ## `join( records, separator )`
 

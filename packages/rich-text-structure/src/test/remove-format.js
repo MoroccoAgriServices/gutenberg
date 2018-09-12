@@ -18,10 +18,11 @@ describe( 'removeFormat', () => {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
 		};
-		const actual = removeFormat( record, 'strong', 3, 6 );
+		const result = removeFormat( record, 'strong', 3, 6 );
 
-		expect( actual ).toEqual( expected );
-		expect( getSparseArrayLength( actual.formats ) ).toBe( 3 );
+		expect( result ).toEqual( expected );
+		expect( result ).not.toBe( record );
+		expect( getSparseArrayLength( result.formats ) ).toBe( 3 );
 	} );
 
 	it( 'should remove format for collased selection', () => {
@@ -33,9 +34,10 @@ describe( 'removeFormat', () => {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
 		};
-		const actual = removeFormat( record, 'strong', 4, 4 );
+		const result = removeFormat( record, 'strong', 4, 4 );
 
-		expect( actual ).toEqual( expected );
-		expect( getSparseArrayLength( actual.formats ) ).toBe( 3 );
+		expect( result ).toEqual( expected );
+		expect( result ).not.toBe( record );
+		expect( getSparseArrayLength( result.formats ) ).toBe( 3 );
 	} );
 } );

@@ -9,7 +9,7 @@ import { JSDOM } from 'jsdom';
  */
 
 import { create } from '../create';
-import { recordToDom, multilineRecordToDom } from '../to-dom';
+import { recordToDom, multilineRecordToDom, applyValue } from '../to-dom';
 
 const { window } = new JSDOM();
 const { document } = window;
@@ -18,6 +18,12 @@ function createNode( HTML ) {
 	const doc = document.implementation.createHTMLDocument( '' );
 	doc.body.innerHTML = HTML;
 	return doc.body.firstChild;
+}
+
+function createElement( html ) {
+	const htmlDocument = document.implementation.createHTMLDocument( '' );
+	htmlDocument.body.innerHTML = html;
+	return htmlDocument.body;
 }
 
 describe( 'recordToDom', () => {
@@ -144,6 +150,43 @@ describe( 'recordToDom', () => {
 		expect( selection ).toEqual( {
 			startPath: [ 0, 0, 1 ],
 			endPath: [ 0, 0, 2 ],
+		} );
+	} );
+} );
+
+describe( 'applyValue', () => {
+	const cases = [
+		{
+			current: 'test',
+			future: '',
+			movedCount: 0,
+			description: 'should remove nodes',
+		},
+		{
+			current: '',
+			future: 'test',
+			movedCount: 1,
+			description: 'should add nodes',
+		},
+		{
+			current: 'test',
+			future: 'test',
+			movedCount: 0,
+			description: 'should not modify',
+		},
+	];
+
+	cases.forEach( ( { current, future, description, movedCount } ) => {
+		it( description, () => {
+			const body = createElement( current );
+			const futureBody = createElement( future );
+			const childNodes = Array.from( futureBody.childNodes );
+			applyValue( futureBody, body );
+			const count = childNodes.reduce( ( acc, { parentNode } ) => {
+				return parentNode === body ? acc + 1 : acc;
+			}, 0 );
+			expect( body.innerHTML ).toEqual( future );
+			expect( count ).toEqual( movedCount );
 		} );
 	} );
 } );

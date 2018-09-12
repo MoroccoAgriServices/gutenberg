@@ -19,10 +19,8 @@ export function insert(
 ) {
 	const index = startIndex + recordToInsert.text.length;
 
-	formats.splice( startIndex, endIndex - startIndex, ...recordToInsert.formats );
-
 	return {
-		formats,
+		formats: formats.slice( 0, startIndex ).concat( recordToInsert.formats, formats.slice( endIndex ) ),
 		text: text.slice( 0, startIndex ) + recordToInsert.text + text.slice( endIndex ),
 		start: index,
 		end: index,

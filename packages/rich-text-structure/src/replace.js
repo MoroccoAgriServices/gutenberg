@@ -29,10 +29,14 @@ export function replace( { formats, text }, pattern, replacement ) {
 			newFormats = newText.formats;
 			newText = newText.text;
 		} else {
-			newFormats = Array( newText.length ).fill( formats[ offset ] );
+			newFormats = Array( newText.length );
+
+			if ( formats[ offset ] ) {
+				newFormats = newFormats.fill( formats[ offset ] );
+			}
 		}
 
-		formats.splice( offset, match.length, ...newFormats );
+		formats = formats.slice( 0, offset ).concat( newFormats, formats.slice( offset + match.length ) );
 
 		return newText;
 	} );

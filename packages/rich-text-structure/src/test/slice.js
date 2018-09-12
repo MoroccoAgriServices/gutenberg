@@ -3,6 +3,7 @@
  */
 
 import { slice } from '../slice';
+import { getSparseArrayLength } from './helpers';
 
 describe( 'slice', () => {
 	const em = { type: 'em' };
@@ -12,13 +13,15 @@ describe( 'slice', () => {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
 		};
-
 		const expected = {
 			formats: [ , [ em ], [ em ] ],
 			text: ' tw',
 		};
+		const result = slice( record, 3, 6 );
 
-		expect( slice( record, 3, 6 ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		expect( result ).not.toBe( record );
+		expect( getSparseArrayLength( result.formats ) ).toBe( 2 );
 	} );
 
 	it( 'should slice record', () => {
@@ -28,12 +31,14 @@ describe( 'slice', () => {
 			start: 3,
 			end: 6,
 		};
-
 		const expected = {
 			formats: [ , [ em ], [ em ] ],
 			text: ' tw',
 		};
+		const result = slice( record );
 
-		expect( slice( record ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		expect( result ).not.toBe( record );
+		expect( getSparseArrayLength( result.formats ) ).toBe( 2 );
 	} );
 } );

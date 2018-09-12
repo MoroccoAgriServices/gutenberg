@@ -3,6 +3,7 @@
  */
 
 import { split } from '../split';
+import { getSparseArrayLength } from './helpers';
 
 describe( 'split', () => {
 	const em = { type: 'em' };
@@ -14,7 +15,6 @@ describe( 'split', () => {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
 		};
-
 		const expected = [
 			{
 				formats: [ , , , , [ em ], [ em ] ],
@@ -27,8 +27,14 @@ describe( 'split', () => {
 				text: 'o three',
 			},
 		];
+		const result = split( record, 6, 6 );
 
-		expect( split( record, 6, 6 ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		result.forEach( ( item, index ) => {
+			expect( item ).not.toBe( record );
+			expect( getSparseArrayLength( item.formats ) )
+				.toBe( getSparseArrayLength( expected[ index ].formats ) );
+		} );
 	} );
 
 	it( 'should split with selection', () => {
@@ -38,7 +44,6 @@ describe( 'split', () => {
 			start: 6,
 			end: 6,
 		};
-
 		const expected = [
 			{
 				formats: [ , , , , [ em ], [ em ] ],
@@ -51,8 +56,14 @@ describe( 'split', () => {
 				end: 0,
 			},
 		];
+		const result = split( record );
 
-		expect( split( record ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		result.forEach( ( item, index ) => {
+			expect( item ).not.toBe( record );
+			expect( getSparseArrayLength( item.formats ) )
+				.toBe( getSparseArrayLength( expected[ index ].formats ) );
+		} );
 	} );
 
 	it( 'should split empty', () => {
@@ -62,7 +73,6 @@ describe( 'split', () => {
 			start: 0,
 			end: 0,
 		};
-
 		const expected = [
 			{
 				formats: [],
@@ -75,8 +85,14 @@ describe( 'split', () => {
 				end: 0,
 			},
 		];
+		const result = split( record );
 
-		expect( split( record ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		result.forEach( ( item, index ) => {
+			expect( item ).not.toBe( record );
+			expect( getSparseArrayLength( item.formats ) )
+				.toBe( getSparseArrayLength( expected[ index ].formats ) );
+		} );
 	} );
 
 	it( 'should split search', () => {
@@ -86,7 +102,6 @@ describe( 'split', () => {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , , , , , , , , , , , ],
 			text: 'one two three four five',
 		};
-
 		const expected = [
 			{
 				formats: [ , , , ],
@@ -115,8 +130,14 @@ describe( 'split', () => {
 				text: 'five',
 			},
 		];
+		const result = split( record, ' ' );
 
-		expect( split( record, ' ' ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		result.forEach( ( item, index ) => {
+			expect( item ).not.toBe( record );
+			expect( getSparseArrayLength( item.formats ) )
+				.toBe( getSparseArrayLength( expected[ index ].formats ) );
+		} );
 	} );
 
 	it( 'should split search 2', () => {
@@ -126,7 +147,6 @@ describe( 'split', () => {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
 		};
-
 		const expected = [
 			{
 				formats: [ , , , ],
@@ -143,7 +163,13 @@ describe( 'split', () => {
 				text: 'three',
 			},
 		];
+		const result = split( record, ' ' );
 
-		expect( split( record, ' ' ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		result.forEach( ( item, index ) => {
+			expect( item ).not.toBe( record );
+			expect( getSparseArrayLength( item.formats ) )
+				.toBe( getSparseArrayLength( expected[ index ].formats ) );
+		} );
 	} );
 } );

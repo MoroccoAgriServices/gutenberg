@@ -3,6 +3,7 @@
  */
 
 import { insert } from '../insert';
+import { getSparseArrayLength } from './helpers';
 
 describe( 'insert', () => {
 	const em = { type: 'em' };
@@ -15,20 +16,21 @@ describe( 'insert', () => {
 			start: 6,
 			end: 6,
 		};
-
 		const toInsert = {
 			formats: [ [ strong ] ],
 			text: 'a',
 		};
-
 		const expected = {
 			formats: [ , , [ strong ], [ em ], , , , , , , ],
 			text: 'onao three',
 			start: 3,
 			end: 3,
 		};
+		const result = insert( record, toInsert, 2, 6 );
 
-		expect( insert( record, toInsert, 2, 6 ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		expect( result ).not.toBe( record );
+		expect( getSparseArrayLength( result.formats ) ).toBe( 2 );
 	} );
 
 	it( 'should insert line break with selection', () => {
@@ -38,19 +40,20 @@ describe( 'insert', () => {
 			start: 1,
 			end: 1,
 		};
-
 		const toInsert = {
 			formats: [ , ],
 			text: '\n',
 		};
-
 		const expected = {
 			formats: [ , , , ],
 			text: 't\nt',
 			start: 2,
 			end: 2,
 		};
+		const result = insert( record, toInsert );
 
-		expect( insert( record, toInsert ) ).toEqual( expected );
+		expect( result ).toEqual( expected );
+		expect( result ).not.toBe( record );
+		expect( getSparseArrayLength( result.formats ) ).toBe( 0 );
 	} );
 } );
