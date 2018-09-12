@@ -63,9 +63,7 @@ export const settings = {
 		},
 		mediaWidth: {
 			type: 'number',
-			source: 'attribute',
-			selector: 'figure video,figure img',
-			attribute: 'width',
+			default: 50,
 		},
 	},
 
@@ -88,12 +86,12 @@ export const settings = {
 		const mediaTypeRenders = {
 			image: () => {
 				return (
-					<img src={ mediaUrl } alt={ mediaAlt } width={ mediaWidth } />
+					<img src={ mediaUrl } alt={ mediaAlt } />
 				);
 			},
 			video: () => {
 				return (
-					<video controls src={ mediaUrl } width={ mediaWidth } />
+					<video controls src={ mediaUrl } />
 				);
 			},
 		};
@@ -106,6 +104,7 @@ export const settings = {
 
 		const style = {
 			backgroundColor: backgroundClass ? undefined : customBackgroundColor,
+			gridTemplateColumns: 'right' === mediaPosition ? `auto ${ mediaWidth }%` : `${ mediaWidth }% auto`,
 		};
 		return (
 			<div className={ className } style={ style }>
