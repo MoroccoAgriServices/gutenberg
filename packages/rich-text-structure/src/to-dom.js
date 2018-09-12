@@ -58,13 +58,12 @@ function getNodeByPath( node, path ) {
 	};
 }
 
-export function recordToDom( { formats, text, selection = {} }, tag ) {
+export function recordToDom( { formats, text, start, end }, tag ) {
 	const htmlDocument = document.implementation.createHTMLDocument( '' );
 	let { body } = htmlDocument;
 	let startPath = [];
 	let endPath = [];
 
-	const { start, end } = selection;
 	const formatsLength = formats.length + 1;
 
 	if ( tag ) {
@@ -173,7 +172,7 @@ export function apply( record, current, multilineTag ) {
 
 	applyValue( body, current );
 
-	if ( record.selection ) {
+	if ( record.start !== undefined ) {
 		applySelection( selection, current );
 	}
 }

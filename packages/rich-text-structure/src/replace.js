@@ -15,11 +15,7 @@
  *
  * @return {Object} A new record with replacements applied.
  */
-export function replace(
-	{ formats, text },
-	pattern,
-	replacement
-) {
+export function replace( { formats, text }, pattern, replacement ) {
 	text = text.replace( pattern, ( match, ...rest ) => {
 		const offset = rest[ rest.length - 2 ];
 		let newText = replacement;
@@ -41,5 +37,5 @@ export function replace(
 		return newText;
 	} );
 
-	return { formats, text, selection: {} };
+	return { formats, text };
 }

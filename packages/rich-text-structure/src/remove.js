@@ -10,12 +10,12 @@ import { create } from './create';
  * If no start index or end index is provided, the record's selection will be
  * used.
  *
- * @param {Object} record Record to modify.
- * @param {number} start  Start index.
- * @param {number} end    End index.
+ * @param {Object} record     Record to modify.
+ * @param {number} startIndex Start index.
+ * @param {number} endIndex   End index.
  *
  * @return {Object} A new record with the content removed.
  */
-export function remove( record, start, end ) {
-	return insert( record, create(), start, end );
+export function remove( record, startIndex, endIndex ) {
+	return insert( record, create(), startIndex, endIndex );
 }

@@ -36,7 +36,6 @@ import {
 	split,
 	toHTMLString,
 	createValue,
-	isSelectionEqual,
 	getTextContent,
 } from '@wordpress/rich-text-structure';
 
@@ -111,9 +110,7 @@ export class RichText extends Component {
 			type === 'pattern' && trigger === 'enter'
 		);
 
-		this.state = {
-			selection: {},
-		};
+		this.state = {};
 	}
 
 	/**
@@ -211,9 +208,9 @@ export class RichText extends Component {
 	 */
 	getRecord() {
 		const { formats, text } = this.formatToValue( this.props.value );
-		const { selection } = this.state;
+		const { start, end } = this.state;
 
-		return { formats, text, selection };
+		return { formats, text, start, end };
 	}
 
 	createRecord() {
@@ -397,10 +394,10 @@ export class RichText extends Component {
 			return;
 		}
 
-		const { selection } = this.createRecord();
+		const { start, end } = this.createRecord();
 
-		if ( ! isSelectionEqual( selection, this.state.selection ) ) {
-			this.setState( { selection: selection } );
+		if ( start !== this.state.start || end !== this.state.end ) {
+			this.setState( { start, end } );
 		}
 	}
 
@@ -417,9 +414,11 @@ export class RichText extends Component {
 			this.applyRecord( record );
 		}
 
+		const { start, end } = record;
+
 		this.savedContent = this.valueToFormat( record );
 		this.props.onChange( this.savedContent );
-		this.setState( { selection: record.selection } );
+		this.setState( { start, end } );
 	}
 
 	onCreateUndoLevel( event ) {
@@ -762,7 +761,6 @@ export class RichText extends Component {
 
 	componentDidUpdate( prevProps ) {
 		const { tagName, value } = this.props;
-		const { selection } = this.state;
 
 		if (
 			this.editor &&
@@ -771,9 +769,11 @@ export class RichText extends Component {
 			value !== this.savedContent
 		) {
 			const record = this.formatToValue( value );
+			const { start, end } = this.state;
 
 			if ( this.editor.hasFocus() ) {
-				record.selection = selection;
+				record.start = start;
+				record.end = end;
 			}
 
 			this.applyRecord( record );

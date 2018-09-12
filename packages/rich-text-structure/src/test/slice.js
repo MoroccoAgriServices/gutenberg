@@ -25,10 +25,8 @@ describe( 'slice', () => {
 		const record = {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
-			selection: {
-				start: 3,
-				end: 6,
-			},
+			start: 3,
+			end: 6,
 		};
 
 		const expected = {

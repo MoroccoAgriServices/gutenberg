@@ -17,7 +17,6 @@ describe( 'removeFormat', () => {
 		const expected = {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
-			selection: {},
 		};
 		const actual = removeFormat( record, 'strong', 3, 6 );
 
@@ -33,7 +32,6 @@ describe( 'removeFormat', () => {
 		const expected = {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
-			selection: {},
 		};
 		const actual = removeFormat( record, 'strong', 4, 4 );
 

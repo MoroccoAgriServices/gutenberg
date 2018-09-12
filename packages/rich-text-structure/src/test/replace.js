@@ -11,16 +11,13 @@ describe( 'replace', () => {
 		const record = {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
-			selection: {
-				start: 6,
-				end: 6,
-			},
+			start: 6,
+			end: 6,
 		};
 
 		const expected = {
 			formats: [ , , , , [ em ], , , , , , , ],
 			text: 'one 2 three',
-			selection: {},
 		};
 
 		expect( replace( record, 'two', '2' ) ).toEqual( expected );
@@ -30,10 +27,8 @@ describe( 'replace', () => {
 		const record = {
 			formats: [ , , , , [ em ], [ em ], [ em ], , , , , , , ],
 			text: 'one two three',
-			selection: {
-				start: 6,
-				end: 6,
-			},
+			start: 6,
+			end: 6,
 		};
 
 		const replacement = {
@@ -44,7 +39,6 @@ describe( 'replace', () => {
 		const expected = {
 			formats: [ , , , , , , , , , , , ],
 			text: 'one 2 three',
-			selection: {},
 		};
 
 		expect( replace( record, 'two', replacement ) ).toEqual( expected );
@@ -54,16 +48,13 @@ describe( 'replace', () => {
 		const record = {
 			formats: [ , , , , , , , , , , , , ],
 			text: 'abc12345#$*%',
-			selection: {
-				start: 6,
-				end: 6,
-			},
+			start: 6,
+			end: 6,
 		};
 
 		const expected = {
 			formats: [ , , , , , , , , , , , , , , , , , , ],
 			text: 'abc - 12345 - #$*%',
-			selection: {},
 		};
 
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace

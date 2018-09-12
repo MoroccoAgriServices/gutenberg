@@ -47,7 +47,6 @@ export function create( element, range, multilineTag, settings ) {
 	const emptyRecord = {
 		formats: [],
 		text: '',
-		selection: {},
 	};
 
 	if ( ! element || ! element.hasChildNodes() ) {
@@ -63,26 +62,26 @@ export function create( element, range, multilineTag, settings ) {
 	}
 
 	return children.reduce( ( accumulator, node, index ) => {
-		const { selection, text, formats } = createRecord( node, range, settings );
+		const { start, end, text, formats } = createRecord( node, range, settings );
 		const length = accumulator.text.length;
 
 		if ( range ) {
-			if ( selection.start !== undefined ) {
-				accumulator.selection.start = length + selection.start;
+			if ( start !== undefined ) {
+				accumulator.start = length + start;
 			} else if (
 				node.parentNode === range.startContainer &&
 				node === range.startContainer.childNodes[ range.startOffset ]
 			) {
-				accumulator.selection.start = length;
+				accumulator.start = length;
 			}
 
-			if ( selection.end !== undefined ) {
-				accumulator.selection.end = length + selection.end;
+			if ( end !== undefined ) {
+				accumulator.end = length + end;
 			} else if (
 				node.parentNode === range.endContainer &&
 				node === range.endContainer.childNodes[ range.endOffset - 1 ]
 			) {
-				accumulator.selection.end = length + text.length;
+				accumulator.end = length + text.length;
 			}
 		}
 
@@ -108,9 +107,7 @@ export function create( element, range, multilineTag, settings ) {
  * @return {Object} A rich text value object.
  */
 export function createValue( element, multilineTag, settings ) {
-	const record = create( element, null, multilineTag, settings );
-	delete record.selection;
-	return record;
+	return create( element, null, multilineTag, settings );
 }
 
 /**
@@ -136,7 +133,6 @@ function createRecord( element, range, settings = {} ) {
 	const emptyRecord = {
 		formats: [],
 		text: '',
-		selection: {},
 	};
 
 	if ( ! element || ! element.hasChildNodes() ) {
@@ -165,27 +161,27 @@ function createRecord( element, range, settings = {} ) {
 				if ( node === range.startContainer ) {
 					const charactersBefore = nodeValue.slice( 0, range.startOffset );
 					const lengthBefore = filterStringComplete( charactersBefore ).length;
-					accumulator.selection.start = textLength + lengthBefore;
+					accumulator.start = textLength + lengthBefore;
 				}
 
 				if ( node === range.endContainer ) {
 					const charactersBefore = nodeValue.slice( 0, range.endOffset );
 					const lengthBefore = filterStringComplete( charactersBefore ).length;
-					accumulator.selection.end = textLength + lengthBefore;
+					accumulator.end = textLength + lengthBefore;
 				}
 
 				if (
 					node.parentNode === range.startContainer &&
 					node === range.startContainer.childNodes[ range.startOffset ]
 				) {
-					accumulator.selection.start = textLength;
+					accumulator.start = textLength;
 				}
 
 				if (
 					node.parentNode === range.endContainer &&
 					node === range.endContainer.childNodes[ range.endOffset - 1 ]
 				) {
-					accumulator.selection.end = textLength + text.length;
+					accumulator.end = textLength + text.length;
 				}
 			}
 
@@ -205,14 +201,14 @@ function createRecord( element, range, settings = {} ) {
 				node.parentNode === range.startContainer &&
 				node === range.startContainer.childNodes[ range.startOffset ]
 			) {
-				accumulator.selection.start = accumulator.text.length;
+				accumulator.start = accumulator.text.length;
 			}
 
 			if (
 				node.parentNode === range.endContainer &&
 				node === range.endContainer.childNodes[ range.endOffset - 1 ]
 			) {
-				accumulator.selection.end = accumulator.text.length;
+				accumulator.end = accumulator.text.length;
 			}
 		}
 
@@ -244,7 +240,7 @@ function createRecord( element, range, settings = {} ) {
 				node.parentNode === range.endContainer &&
 				node === range.endContainer.childNodes[ range.endOffset - 1 ]
 			) {
-				accumulator.selection.end = start + text.length;
+				accumulator.end = start + text.length;
 			}
 		}
 
@@ -289,12 +285,12 @@ function createRecord( element, range, settings = {} ) {
 			}
 		}
 
-		if ( record.selection.start !== undefined ) {
-			accumulator.selection.start = start + record.selection.start;
+		if ( record.start !== undefined ) {
+			accumulator.start = start + record.start;
 		}
 
-		if ( record.selection.end !== undefined ) {
-			accumulator.selection.end = start + record.selection.end;
+		if ( record.end !== undefined ) {
+			accumulator.end = start + record.end;
 		}
 
 		return accumulator;

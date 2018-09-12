@@ -12,42 +12,42 @@ import { find } from 'lodash';
  *
  * @param {Object} record     Record to modify.
  * @param {string} formatType Format type to remove.
- * @param {number} start      Start index.
- * @param {number} end        End index.
+ * @param {number} startIndex Start index.
+ * @param {number} endIndex   End index.
  *
  * @return {Object} A new record with the format applied.
  */
 export function removeFormat(
-	{ formats, text, selection = {} },
+	{ formats, text, start, end },
 	formatType,
-	start = selection.start,
-	end = selection.end
+	startIndex = start,
+	endIndex = end
 ) {
 	// If the selection is collapsed, expand start and end to the edges of the
 	// format.
-	if ( start === end ) {
-		const format = find( formats[ start ], { type: formatType } );
+	if ( startIndex === endIndex ) {
+		const format = find( formats[ startIndex ], { type: formatType } );
 
-		while ( find( formats[ start ], format ) ) {
-			filterFormats( formats, start, formatType );
-			start--;
+		while ( find( formats[ startIndex ], format ) ) {
+			filterFormats( formats, startIndex, formatType );
+			startIndex--;
 		}
 
-		end++;
+		endIndex++;
 
-		while ( find( formats[ end ], format ) ) {
-			filterFormats( formats, end, formatType );
-			end++;
+		while ( find( formats[ endIndex ], format ) ) {
+			filterFormats( formats, endIndex, formatType );
+			endIndex++;
 		}
 	} else {
-		for ( let i = start; i < end; i++ ) {
+		for ( let i = startIndex; i < endIndex; i++ ) {
 			if ( formats[ i ] ) {
 				filterFormats( formats, i, formatType );
 			}
 		}
 	}
 
-	return { formats, text, selection };
+	return { formats, text, start, end };
 }
 
 function filterFormats( formats, index, formatType ) {

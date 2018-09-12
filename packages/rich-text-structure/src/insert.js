@@ -6,27 +6,25 @@
  *
  * @param {Object} record         Record to modify.
  * @param {string} recordToInsert Record to insert.
- * @param {number} start          Start index.
- * @param {number} end            End index.
+ * @param {number} startIndex     Start index.
+ * @param {number} endIndex       End index.
  *
  * @return {Object} A new record with the record inserted.
  */
 export function insert(
-	{ formats, text, selection = {} },
+	{ formats, text, start, end },
 	recordToInsert,
-	start = selection.start,
-	end = selection.end
+	startIndex = start,
+	endIndex = end
 ) {
-	const index = start + recordToInsert.text.length;
+	const index = startIndex + recordToInsert.text.length;
 
-	formats.splice( start, end - start, ...recordToInsert.formats );
+	formats.splice( startIndex, endIndex - startIndex, ...recordToInsert.formats );
 
 	return {
 		formats,
-		text: text.slice( 0, start ) + recordToInsert.text + text.slice( end ),
-		selection: {
-			start: index,
-			end: index,
-		},
+		text: text.slice( 0, startIndex ) + recordToInsert.text + text.slice( endIndex ),
+		start: index,
+		end: index,
 	};
 }

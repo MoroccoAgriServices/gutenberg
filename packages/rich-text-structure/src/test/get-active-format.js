@@ -11,10 +11,8 @@ describe( 'getActiveFormat', () => {
 		const record = {
 			formats: [ [ em ], , , ],
 			text: 'one',
-			selection: {
-				start: 0,
-				end: 0,
-			},
+			start: 0,
+			end: 0,
 		};
 
 		expect( getActiveFormat( record, 'em' ) ).toEqual( em );
@@ -24,10 +22,8 @@ describe( 'getActiveFormat', () => {
 		const record = {
 			formats: [ [ em ], , [ em ] ],
 			text: 'one',
-			selection: {
-				start: 1,
-				end: 1,
-			},
+			start: 1,
+			end: 1,
 		};
 
 		expect( getActiveFormat( record, 'em' ) ).toBe( undefined );

@@ -4,20 +4,20 @@
  * If at any index there is already a format of the same type present, it will
  * be removed.
  *
- * @param {Object} record Record to modify.
- * @param {Object} format Format to apply.
- * @param {number} start  Start index.
- * @param {number} end    End index.
+ * @param {Object} record     Record to modify.
+ * @param {Object} format     Format to apply.
+ * @param {number} startIndex Start index.
+ * @param {number} endIndex   End index.
  *
  * @return {Object} A new record with the format applied.
  */
 export function applyFormat(
-	{ formats, text, selection = {} },
+	{ formats, text, start, end },
 	format,
-	start = selection.start,
-	end = selection.end
+	startIndex = start,
+	endIndex = end
 ) {
-	for ( let i = start; i < end; i++ ) {
+	for ( let i = startIndex; i < endIndex; i++ ) {
 		if ( formats[ i ] ) {
 			const newFormats = formats[ i ].filter( ( { type } ) => type !== format.type );
 			newFormats.push( format );
@@ -27,5 +27,5 @@ export function applyFormat(
 		}
 	}
 
-	return { formats, text, selection };
+	return { formats, text, start, end };
 }

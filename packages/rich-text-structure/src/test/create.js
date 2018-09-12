@@ -40,7 +40,6 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {},
 				formats: [],
 				text: '',
 			},
@@ -55,10 +54,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 0,
-				},
+				start: 0,
+				end: 0,
 				formats: [],
 				text: '',
 			},
@@ -73,10 +70,8 @@ describe( 'create', () => {
 				endContainer: element.firstChild,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ , , , , ],
 				text: 'test',
 			},
@@ -91,10 +86,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 2,
-				},
+				start: 0,
+				end: 2,
 				formats: [ , , ],
 				text: '🍒',
 			},
@@ -109,10 +102,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 2,
-				},
+				start: 0,
+				end: 2,
 				formats: [ [ em ], [ em ] ],
 				text: '🍒',
 			},
@@ -127,10 +118,8 @@ describe( 'create', () => {
 				endContainer: element.firstChild,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ [ em ], [ em ], [ em ], [ em ] ],
 				text: 'test',
 			},
@@ -145,10 +134,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ [ em, strong ], [ em, strong ], [ em, strong ], [ em, strong ] ],
 				text: 'test',
 			},
@@ -163,10 +150,8 @@ describe( 'create', () => {
 				endContainer: element.querySelector( 'em' ),
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 2,
-				},
+				start: 0,
+				end: 2,
 				formats: [ [ em ], [ em ], [ em ], [ em ] ],
 				text: 'test',
 			},
@@ -181,10 +166,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ [ a ], [ a ], [ a ], [ a ] ],
 				text: 'test',
 			},
@@ -199,10 +182,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 0,
-				},
+				start: 0,
+				end: 0,
 				formats: [ [ img ] ],
 				text: '',
 			},
@@ -217,7 +198,6 @@ describe( 'create', () => {
 				endContainer: element.querySelector( 'img' ),
 			} ),
 			record: {
-				selection: {},
 				formats: [ [ em, img ] ],
 				text: '',
 			},
@@ -232,10 +212,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ , , [ em ], [ em ], [ em, img ] ],
 				text: 'test',
 			},
@@ -250,10 +228,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ [ em, img ], [ em ], [ em ], , , ],
 				text: 'test',
 			},
@@ -268,10 +244,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 0,
-				},
+				start: 0,
+				end: 0,
 				formats: [ , ],
 				text: '\n',
 			},
@@ -286,10 +260,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 2,
-					end: 2,
-				},
+				start: 2,
+				end: 2,
 				formats: [ , , , , , ],
 				text: 'te\nst',
 			},
@@ -304,10 +276,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 1,
-				},
+				start: 0,
+				end: 1,
 				formats: [ [ em ] ],
 				text: '\n',
 			},
@@ -323,9 +293,7 @@ describe( 'create', () => {
 				endContainer: element.lastChild,
 			} ),
 			record: {
-				selection: {
-					start: 1,
-				},
+				start: 1,
 				formats: [ , , , , , , , , ],
 				text: 'one\n\ntwo',
 			},
@@ -341,10 +309,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 6,
-				},
+				start: 0,
+				end: 6,
 				formats: [ , , , list, list, list, , , , , , , , ],
 				text: 'onetwo\n\nthree',
 			},
@@ -362,10 +328,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 0,
-				},
+				start: 0,
+				end: 0,
 				formats: [],
 				text: '',
 			},
@@ -383,10 +347,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 0,
-				},
+				start: 0,
+				end: 0,
 				formats: [],
 				text: '',
 			},
@@ -404,10 +366,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ , , [ em ], [ em ] ],
 				text: 'test',
 			},
@@ -425,10 +385,8 @@ describe( 'create', () => {
 				endContainer: element.lastChild,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 1,
-				},
+				start: 0,
+				end: 1,
 				formats: [ , , , ],
 				text: 'two',
 			},
@@ -446,10 +404,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 4,
-				},
+				start: 0,
+				end: 4,
 				formats: [ [ strong ], [ strong ], [ strong ], [ strong ] ],
 				text: 'test',
 			},
@@ -467,10 +423,8 @@ describe( 'create', () => {
 				endContainer: element,
 			} ),
 			record: {
-				selection: {
-					start: 0,
-					end: 0,
-				},
+				start: 0,
+				end: 0,
 				formats: [],
 				text: '',
 			},
@@ -488,10 +442,8 @@ describe( 'create', () => {
 				endContainer: element.firstChild,
 			} ),
 			record: {
-				selection: {
-					start: 4,
-					end: 4,
-				},
+				start: 4,
+				end: 4,
 				formats: [ , , , , ],
 				text: 'test',
 			},
@@ -509,10 +461,8 @@ describe( 'create', () => {
 				endContainer: element.querySelector( 'em' ).firstChild,
 			} ),
 			record: {
-				selection: {
-					start: 4,
-					end: 4,
-				},
+				start: 4,
+				end: 4,
 				formats: [ [ em ], [ em ], [ em ], [ em ] ],
 				text: 'test',
 			},
@@ -530,10 +480,8 @@ describe( 'create', () => {
 				endContainer: element.lastChild,
 			} ),
 			record: {
-				selection: {
-					start: 4,
-					end: 4,
-				},
+				start: 4,
+				end: 4,
 				formats: [ [ em ], [ em ], [ em ], [ em ] ],
 				text: 'test',
 			},

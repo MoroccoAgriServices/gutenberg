@@ -4,10 +4,10 @@
 
 import { find } from 'lodash';
 
-export function getActiveFormat( { formats, selection }, formatType ) {
-	if ( ! selection || selection.start === undefined ) {
+export function getActiveFormat( { formats, start }, formatType ) {
+	if ( start === undefined ) {
 		return;
 	}
 
-	return find( formats[ selection.start ], { type: formatType } );
+	return find( formats[ start ], { type: formatType } );
 }

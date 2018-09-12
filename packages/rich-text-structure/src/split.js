@@ -10,7 +10,7 @@
  *
  * @return {Array} An array of new records.
  */
-export function split( { formats, text, selection }, string ) {
+export function split( { formats, text, start, end }, string ) {
 	if ( typeof string !== 'string' ) {
 		return splitAtSelection( ...arguments );
 	}
@@ -18,51 +18,47 @@ export function split( { formats, text, selection }, string ) {
 	let nextStart = 0;
 
 	return text.split( string ).map( ( substring ) => {
-		const splitSelection = {};
-		const start = nextStart;
+		const startIndex = nextStart;
+		const record = {
+			formats: formats.slice( startIndex, startIndex + substring.length ),
+			text: substring,
+		};
 
 		nextStart += string.length + substring.length;
 
-		if ( selection ) {
-			if ( selection.start > start && selection.start < nextStart ) {
-				splitSelection.start = selection.start - start;
-			} else if ( selection.start < start && selection.end > start ) {
-				splitSelection.start = 0;
+		if ( start !== undefined && end !== undefined ) {
+			if ( start > startIndex && start < nextStart ) {
+				record.start = start - startIndex;
+			} else if ( start < startIndex && end > startIndex ) {
+				record.start = 0;
 			}
 
-			if ( selection.end > start && selection.end < nextStart ) {
-				splitSelection.end = selection.end - start;
-			} else if ( selection.start < nextStart && selection.end > nextStart ) {
-				splitSelection.end = substring.length;
+			if ( end > startIndex && end < nextStart ) {
+				record.end = end - startIndex;
+			} else if ( start < nextStart && end > nextStart ) {
+				record.end = substring.length;
 			}
 		}
 
-		return {
-			formats: formats.slice( start, start + substring.length ),
-			text: substring,
-			selection: splitSelection,
-		};
+		return record;
 	} );
 }
 
 function splitAtSelection(
-	{ formats, text, selection = {} },
-	start = selection.start,
-	end = selection.end
+	{ formats, text, start, end },
+	startIndex = start,
+	endIndex = end
 ) {
 	return [
 		{
-			formats: formats.slice( 0, start ),
-			text: text.slice( 0, start ),
-			selection: {},
+			formats: formats.slice( 0, startIndex ),
+			text: text.slice( 0, startIndex ),
 		},
 		{
-			formats: formats.slice( end ),
-			text: text.slice( end ),
-			selection: {
-				start: 0,
-				end: 0,
-			},
+			formats: formats.slice( endIndex ),
+			text: text.slice( endIndex ),
+			start: 0,
+			end: 0,
 		},
 	];
 }

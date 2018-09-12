@@ -179,7 +179,7 @@ export class Autocomplete extends Component {
 	insertCompletion( replacement ) {
 		const { open, query } = this.state;
 		const { record, onChange } = this.props;
-		const end = record.selection.start;
+		const end = record.start;
 		const start = end - open.triggerPrefix.length - query.length;
 		const toInsert = create( renderToString( replacement ) );
 
