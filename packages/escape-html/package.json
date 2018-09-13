@@ -1,14 +1,13 @@
 {
-	"name": "@wordpress/rich-text-structure",
+	"name": "@wordpress/escape-html",
 	"version": "1.0.0",
-	"description": "Rich text structure and manipulation API.",
+	"description": "Escape HTML.",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
-		"wordpress",
-		"rich-text"
+		"wordpress"
 	],
-	"homepage": "https://github.com/WordPress/gutenberg/tree/master/packages/rich-text/README.md",
+	"homepage": "https://github.com/WordPress/gutenberg/tree/master/packages/escape-html/README.md",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/WordPress/gutenberg.git"
@@ -19,9 +18,7 @@
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"dependencies": {
-		"@babel/runtime-corejs2": "7.0.0-beta.56",
-		"@wordpress/escape-html": "file:../escape-html",
-		"lodash": "4.17.10"
+		"@babel/runtime-corejs2": "7.0.0-beta.56"
 	},
 	"publishConfig": {
 		"access": "public"

@@ -98,6 +98,7 @@ const gutenbergPackages = [
 	'dom-ready',
 	'editor',
 	'element',
+	'escape-html',
 	'hooks',
 	'html-entities',
 	'i18n',

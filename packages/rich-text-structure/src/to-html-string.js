@@ -2,6 +2,12 @@
  * Internal dependencies
  */
 
+import { escapeHTML, escapeAttribute } from '@wordpress/escape-html';
+
+/**
+ * Internal dependencies
+ */
+
 import { split } from './split';
 
 /**
@@ -69,23 +75,11 @@ function append( parent, object ) {
 	return object;
 }
 
-function escapeHtml( text ) {
-	const map = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'"': '&quot;',
-		"'": '&#039;',
-	};
-
-	return text.replace( /[&<>"']/g, ( character ) => map[ character ] );
-}
-
 function createElementHTML( { type, attributes, object, children } ) {
 	let attributeString = '';
 
 	for ( const key in attributes ) {
-		attributeString += ` ${ key }="${ attributes[ key ] }"`;
+		attributeString += ` ${ key }="${ escapeAttribute( attributes[ key ] ) }"`;
 	}
 
 	if ( object ) {
@@ -97,6 +91,6 @@ function createElementHTML( { type, attributes, object, children } ) {
 
 function createChildrenHTML( children = [] ) {
 	return children.map( ( child ) => {
-		return child.text === undefined ? createElementHTML( child ) : escapeHtml( child.text );
+		return child.text === undefined ? createElementHTML( child ) : escapeHTML( child.text );
 	} ).join( '' );
 }
