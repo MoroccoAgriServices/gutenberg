@@ -6,7 +6,6 @@ import { shallow } from 'enzyme';
 /**
  * WordPress dependencies
  */
-import deprecated from '@wordpress/deprecated';
 import { createValue } from '@wordpress/rich-text-structure';
 
 /**
@@ -14,8 +13,6 @@ import { createValue } from '@wordpress/rich-text-structure';
  */
 import { RichText } from '../';
 import { diffAriaProps, pickAriaProps } from '../aria';
-
-jest.mock( '@wordpress/deprecated', () => jest.fn() );
 
 describe( 'RichText', () => {
 	describe( 'Component', () => {
@@ -32,13 +29,6 @@ describe( 'RichText', () => {
 					forced_root_block: false,
 					custom_undo_redo_levels: 1,
 				} );
-			} );
-
-			test( 'should be overriden (deprecated)', () => {
-				const mock = jest.fn().mockImplementation( () => 'mocked' );
-
-				expect( shallow( <RichText value={ value } getSettings={ mock } /> ).instance().getSettings( settings ) ).toEqual( 'mocked' );
-				expect( deprecated ).toHaveBeenCalled();
 			} );
 
 			test( 'should be overriden', () => {

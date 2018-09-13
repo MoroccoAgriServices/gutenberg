@@ -39,6 +39,7 @@ import {
 	getTextContent,
 	join,
 } from '@wordpress/rich-text-structure';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
