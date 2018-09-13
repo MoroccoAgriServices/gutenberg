@@ -37,6 +37,7 @@ import {
 	toHTMLString,
 	createValue,
 	getTextContent,
+	join,
 } from '@wordpress/rich-text-structure';
 
 /**
@@ -111,6 +112,8 @@ export class RichText extends Component {
 		);
 
 		this.state = {};
+
+		this.deprecatedMultilineArrayFormat = Array.isArray( value );
 	}
 
 	/**
@@ -783,6 +786,22 @@ export class RichText extends Component {
 	formatToValue( value ) {
 		const { format, multiline } = this.props;
 
+		// Handle deprecated `query` and `node` matcher combination for multiline
+		// values.
+		if ( Array.isArray( value ) ) {
+			deprecated( 'node matcher', {
+				alternative: 'children matcher with multiline property',
+				plugin: 'Gutenberg',
+				version: '3.9',
+			} );
+
+			if ( value.length === 0 ) {
+				value = [ createValue() ];
+			}
+
+			return join( value, '\n\n' );
+		}
+
 		if ( format === 'string' ) {
 			return createValue( value, multiline );
 		}
@@ -793,7 +812,12 @@ export class RichText extends Component {
 	valueToFormat( { formats, text } ) {
 		const { format, multiline } = this.props;
 
-		if ( format === 'string' ) {
+		if ( this.deprecatedMultilineArrayFormat ) {
+			return split( { formats, text }, '\n\n' ).map( ( record ) => {
+				record._deprecatedMultilineTag = multiline;
+				return record;
+			} );
+		} if ( format === 'string' ) {
 			return toHTMLString( { formats, text }, multiline );
 		}
 
@@ -953,7 +977,21 @@ const RichTextContainer = compose( [
 RichTextContainer.Content = ( { value, format, tagName: Tag, multiline, ...props } ) => {
 	let html = value;
 
-	if ( format !== 'string' ) {
+	// Handle deprecated `query` and `node` matcher combination for multiline
+	// values.
+	if ( Array.isArray( value ) ) {
+		deprecated( 'node matcher', {
+			alternative: 'children matcher with multiline property',
+			plugin: 'Gutenberg',
+			version: '3.9',
+		} );
+
+		if ( value.length === 0 ) {
+			html = '';
+		} else {
+			html = toHTMLString( join( value, '\n\n' ), value[ 0 ]._deprecatedMultilineTag );
+		}
+	} else if ( format !== 'string' ) {
 		html = toHTMLString( value, multiline );
 	}
 

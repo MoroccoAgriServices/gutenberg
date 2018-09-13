@@ -220,7 +220,7 @@ export const settings = {
 						className={ style === 2 ? 'is-large' : '' }
 						style={ { textAlign: align ? align : null } }
 					>
-						<RichText.Content value={ value } />
+						<RichText.Content multiline="p" value={ value } />
 						{ ! RichText.isEmpty( citation ) && <RichText.Content tagName="cite" value={ citation } /> }
 					</blockquote>
 				);
@@ -247,7 +247,7 @@ export const settings = {
 						className={ `blocks-quote-style-${ style }` }
 						style={ { textAlign: align ? align : null } }
 					>
-						<RichText.Content value={ value } />
+						<RichText.Content multiline="p" value={ value } />
 						{ ! RichText.isEmpty( citation ) && <RichText.Content tagName="footer" value={ citation } /> }
 					</blockquote>
 				);
